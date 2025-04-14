@@ -19,7 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::group(['namespace' => 'API', 'prefix' => 'products'], function (){
-    Route::get('/', [ProductController::class, 'index']);
-});
+Route::apiResource('/products', ProductController::class);
