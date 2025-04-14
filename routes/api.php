@@ -22,4 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['namespace' => 'API', 'prefix' => 'products'], function (){
     Route::get('/', [ProductController::class, 'index']);
+    Route::apiResource('/products', ProductController::class);
 });
+
+Route::post('/product', [ProductController::class, 'store']);

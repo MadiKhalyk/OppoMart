@@ -13,8 +13,6 @@ class ContentHandlerFactory
     {
         return match ($type) {
             WhatsappMessageType::TEXT->value => new TextHandler(),
-            WhatsappMessageType::DOCUMENT->value => new DocumentHandler(),
-            WhatsappMessageType::IMAGE->value => new ImageHandler(),
             default => self::logAndThrow($type),
         };
     }

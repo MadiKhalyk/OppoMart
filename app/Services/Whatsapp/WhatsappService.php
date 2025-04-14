@@ -3,13 +3,10 @@
 namespace App\Services\Whatsapp;
 
 use App\Enum\WhatsappMessageType;
-use App\Models\Chat;
 use App\Models\WhatsappChat;
-use App\Services\OpenAIService;
 use App\Services\Whatsapp\Handlers\ContentHandlerFactory;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 class WhatsappService
 {
@@ -25,6 +22,7 @@ class WhatsappService
     {
         $_body = $this->transformMessageBody($body);
 
+        Log::debug($_body);
         try {
             return Http::withHeaders([
                 'Authorization' => 'Bearer ' . $this->token,
