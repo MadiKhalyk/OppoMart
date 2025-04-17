@@ -14,17 +14,8 @@
           </span>
 
                     <div class="block1-wrap-icon flex-c-m flex-w trans-05">
-                        <a href="product-single.html" class="block1-icon flex-c-m wrap-pic-max-w">
-                            <img :src="product.poster" alt="View" />
-                        </a>
-
                         <a href="#" class="block1-icon flex-c-m wrap-pic-max-w" @click.prevent="addToCart">
                             <img src="/assets/images/icons/icon-cart.png" alt="Add to Cart" />
-                        </a>
-
-                        <a href="wishlist.html" class="block1-icon flex-c-m wrap-pic-max-w" @click.prevent="addToWishlist">
-                            <img class="icon-addwish-b1" src="/assets/images/icons/icon-heart.png" alt="Add to Wishlist" />
-                            <img class="icon-addedwish-b1" src="/assets/images/icons/icon-heart2.png" alt="Added to Wishlist" />
                         </a>
                     </div>
                 </div>
@@ -35,6 +26,7 @@
 
 <script setup>
 import { defineProps } from "vue";
+import { useCartStore } from '@/stores/cart'; // Pinia cart store
 
 const props = defineProps({
     product: {
@@ -43,11 +35,10 @@ const props = defineProps({
     }
 });
 
-const addToCart = () => {
-    console.log(`${props.product.name} себетке қосылды`);
-};
+const cart = useCartStore();
 
-const addToWishlist = () => {
-    console.log(`${props.product.name} тілектер тізіміне қосылды`);
+const addToCart = () => {
+    cart.add(props.product);
+    console.log(`${props.product.title} себетке қосылды`);
 };
 </script>

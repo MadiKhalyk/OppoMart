@@ -1,11 +1,9 @@
 <script setup>
+import { useCartStore } from '@/stores/cart';
 import { ref } from 'vue';
 
+const cart = useCartStore(); // Pinia store-ды қолданамыз
 const cartOpen = ref(false);
-const cartItems = [
-    { name: 'Cheery', price: 18, quantity: 2, img: '/assets/images/item-cart-01.jpg' },
-    { name: 'Asparagus', price: 12, quantity: 1, img: '/assets/images/item-cart-02.jpg' }
-];
 
 const toggleCart = () => {
     cartOpen.value = !cartOpen.value;
@@ -16,20 +14,27 @@ const toggleCart = () => {
     <div class="wrap-cart-header">
         <div @click="toggleCart" class="icon-header-item">
             <img src="/assets/images/icons/icon-cart-2.png" alt="CART" />
+            <span v-if="cart.count > 0" class="badge">{{ cart.count }}</span>
         </div>
 
         <div v-if="cartOpen" class="cart-header">
-            <div v-for="item in cartItems" :key="item.name" class="cart-item">
-                <img :src="item.img" :alt="item.name" />
+            <div v-for="item in cart.items" :key="item.id" class="cart-item">
+                <img :src="'/storage/' + item.poster" :alt="item.title" />
                 <div>
-                    <p>{{ item.name }}</p>
+                    <p>{{ item.title }}</p>
                     <p>{{ item.price }}$ x{{ item.quantity }}</p>
                 </div>
             </div>
             <div class="cart-footer">
-                <p>Total: {{ cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0) }}$</p>
-                <a href="checkout.html">Check Out</a>
+                <p>Total: {{ cart.total }}$</p>
+                <router-link сlass="flex-c-m size-a-8 bg10 txt-s-105 cl13 hov-btn2 trans-04" to="/checkout" class="btn-checkout">Check Out</router-link>
             </div>
         </div>
     </div>
 </template>
+
+<style scoped>
+    .cart-header{
+        transform: scale(1);
+    }
+</style>

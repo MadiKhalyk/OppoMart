@@ -53,7 +53,7 @@ const error = ref(null);
 const fetchData = async () => {
     loading.value = true;
     try {
-        const response = await axios.get("http://127.0.0.1:8000/api/products");
+        const response = await axios.get("http://opto-market.test//api/products");
 
         // Өнімдерді API-дан алу
         products.value = response.data.products.map(product => ({
