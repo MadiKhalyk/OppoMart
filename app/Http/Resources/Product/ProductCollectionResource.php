@@ -22,6 +22,7 @@ class ProductCollectionResource extends JsonResource
             'price' => $this->price,
             'old_price' => $this->old_price,
             'category' =>$this->category,
+            'unit' => $this->unit?->name
         ];
     }
 }
