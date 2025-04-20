@@ -22,9 +22,8 @@ class WhatsappService
     {
         $_body = $this->transformMessageBody($body);
 
-        Log::debug($_body);
         try {
-            return Http::withHeaders([
+            Http::withHeaders([
                 'Authorization' => 'Bearer ' . $this->token,
                 'Content-Type' => 'application/json',
             ])->post($this->base_url . "/{$phoneNumberId}/messages", $_body);
