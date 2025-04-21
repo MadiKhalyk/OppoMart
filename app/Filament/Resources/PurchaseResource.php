@@ -58,7 +58,8 @@ class PurchaseResource extends Resource
                 TextColumn::make('total_price')
                     ->label('Итого'),
                 TextColumn::make('address')
-                    ->label('Адрес'),
+                    ->label('Адрес')
+                    ->wrap(),
                 IconColumn::make('status')
                     ->label('Статус')
                     ->boolean(),
