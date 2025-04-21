@@ -59,4 +59,6 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->belongsTo(Purchase::class)->latest()->first();
     }
+
+
 }
