@@ -1,6 +1,4 @@
-// resources/js/stores/cart.js
-
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
 export const useCartStore = defineStore('cart', {
     state: () => ({
@@ -9,7 +7,7 @@ export const useCartStore = defineStore('cart', {
 
     getters: {
         total: (state) => state.items.reduce((sum, item) => sum + item.price * item.quantity, 0),
-        count: (state) => state.items.length
+        count: (state) => state.items.length,
     },
 
     actions: {
@@ -28,10 +26,8 @@ export const useCartStore = defineStore('cart', {
 
         clear() {
             this.items = [];
-
-        }
-
         },
+
         increase(itemId) {
             const item = this.items.find(p => p.id === itemId);
             if (item) {
@@ -45,9 +41,10 @@ export const useCartStore = defineStore('cart', {
                 if (item.quantity > 1) {
                     item.quantity -= 1;
                 } else {
-                    this.remove(itemId); // quantity 1 болса — товарды өшіреді
+                    this.remove(itemId);
                 }
             }
         },
+    },
     persist: true,
 });
