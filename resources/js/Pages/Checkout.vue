@@ -12,7 +12,8 @@ const products = computed(() => cart.items);
 // Form fields
 const firstName = ref('');
 const note = ref('');
-const phone = localStorage.getItem('phone');
+const phone = localStorage.getItem('client_phone');
+
 
 // Address fields
 const street = ref('');
