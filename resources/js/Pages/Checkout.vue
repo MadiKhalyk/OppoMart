@@ -95,12 +95,6 @@ const makeOrder = async () => {
                             <span>Итого</span>
                         </div>
 
-<<<<<<< HEAD
-                        <div v-for="item in products" :key="item.id" class="flex-w flex-sb-m txt-s-101 cl6 bo-b-1 bocl15 p-b-21 p-t-18">
-                            <span>{{ item.title }} <img class="m-rl-3" :src="'/storage/' + item.poster" :alt="item.title"> {{ item.quantity }}</span>
-
-                            <span>{{ item.price * item.quantity }}$</span>
-=======
                         <div v-for="item in products" :key="item.id"
                              class="flex-w flex-sb-m txt-s-101 cl6 bo-b-1 bocl15 p-b-21 p-t-18">
                             <span>
@@ -109,7 +103,7 @@ const makeOrder = async () => {
                               {{ item.quantity }} {{ item.unit ? 'кг' : 'шт' }}
                             </span>
                             <span>{{ item.price * item.quantity }}тг</span>
->>>>>>> front
+
                         </div>
                         <div class="flex-w flex-m txt-m-103 bo-b-1 bocl15 p-tb-23">
                             <span class="size-w-61 cl6">Промежуточный итог</span>

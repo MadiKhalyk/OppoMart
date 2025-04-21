@@ -28,9 +28,9 @@ export const useCartStore = defineStore('cart', {
 
         clear() {
             this.items = [];
-<<<<<<< HEAD
+
         }
-=======
+
         },
         increase(itemId) {
             const item = this.items.find(p => p.id === itemId);
@@ -49,7 +49,5 @@ export const useCartStore = defineStore('cart', {
                 }
             }
         },
->>>>>>> front
-    },
     persist: true,
 });
