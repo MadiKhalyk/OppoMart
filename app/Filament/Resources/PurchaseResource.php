@@ -34,6 +34,7 @@ class PurchaseResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('status')
             ->columns([
                 TextColumn::make('user.phone')
                     ->label('Телефон'),
