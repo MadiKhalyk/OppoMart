@@ -12,6 +12,7 @@ export const useCartStore = defineStore('cart', {
 
     actions: {
         add(item) {
+            console.log('Item added:', item);
             const existing = this.items.find(p => p.id === item.id);
             if (existing) {
                 existing.quantity += 1;
@@ -46,5 +47,7 @@ export const useCartStore = defineStore('cart', {
             }
         },
     },
-    persist: true,
+    persist: {
+        storage: sessionStorage,
+    },
 });

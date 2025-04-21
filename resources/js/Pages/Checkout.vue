@@ -12,7 +12,7 @@ const products = computed(() => cart.items);
 // Form fields
 const firstName = ref('');
 const note = ref('');
-const phone = localStorage.getItem('phone') || '77001112233';
+const phone = localStorage.getItem('phone');
 
 // Address fields
 const street = ref('');
