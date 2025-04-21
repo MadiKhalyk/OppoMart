@@ -14,7 +14,6 @@ class PurchaseController extends Controller
 {
     public function store(Request $request)
     {
-        dd($request->all());
         $validated = $request->validate([
             'phone' => 'required',
             'total_price' => 'required',
