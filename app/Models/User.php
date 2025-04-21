@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\FilamentUser;
 use Filament\Tables\Columns\Layout\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,7 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
@@ -46,9 +47,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function canAccessPanel(Panel $panel): bool
+    public function canAccessFilament(): bool
     {
-        return true;
+        return str_ends_with($this->email, '@admin.com') && $this->hasVerifiedEmail();
     }
 
     public function whatsappChat(): BelongsTo
