@@ -55,9 +55,9 @@ class User extends Authenticatable implements FilamentUser
         return $this->belongsTo(WhatsappChat::class, 'id', 'user_id');
     }
 
-    public function purchase(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function purchase(): BelongsTo
     {
-        return $this->hasOne(Purchase::class, 'id', 'user_id')->latestOfMany();
+        return $this->belongsTo(Purchase::class)->latest()->first();
     }
 
 
