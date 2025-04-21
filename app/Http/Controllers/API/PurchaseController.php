@@ -14,13 +14,15 @@ class PurchaseController extends Controller
 {
     public function store(Request $request)
     {
+        dd($request->all());
         $validated = $request->validate([
             'phone' => 'required',
             'total_price' => 'required',
+            'address' => 'nullable|string',
             'products' => 'required|array',
             'products.*' => 'required|array',
             'products.*.product_id' => 'required|exists:products,id',
-            'products.*.quantity' => 'required'
+            'products.*.quantity' => 'required',
         ]);
 
         $phone = $validated['phone'];
@@ -42,6 +44,7 @@ class PurchaseController extends Controller
             ->create([
                 'user_id' => $user->id,
                 'total_price' => $validated['total_price'] ?? $totalPrice,
+                'address' => $validated['address'] ?? null
             ]);
 
         foreach ($validated['products'] as $item) {

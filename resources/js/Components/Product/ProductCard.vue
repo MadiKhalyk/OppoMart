@@ -1,31 +1,38 @@
 <template>
-    <div class="col-sm-6 col-md-4 col-lg-3 p-b-75 isotope-item" :class="product.categories">
-        <div class="block1">
-            <div class="block1-bg wrap-pic-w bo-all-1 bocl12 hov3 trans-04">
-                <img :src="'/storage/' + product.poster" :alt="product.title" />
+    <div class="col-sm-6 col-md-4 col-lg-3 p-b-30 isotope-item" :class="product.categories">
+        <div class="product-card border rounded p-2">
+            <!-- Сурет -->
+            <div class="product-image">
+                <img
+                    :src="'/storage/' + product.poster"
+                    :alt="product.title"
+                    class="img-fluid"
+                    style="width: 100px; height: 100px; object-fit: cover;"
+                />
+            </div>
 
-                <div class="block1-content flex-col-c-m p-b-46">
-                    <a href="product-single.html" class="txt-m-103 cl3 txt-center hov-cl10 trans-04">
+            <!-- Ақпарат -->
+            <div class="product-info">
+                <div>
+                    <a href="#" class="txt-m-103 cl3 d-block text-truncate mt-2">
                         {{ product.title }}
                         <span v-if="product.unit">({{ product.unit }})</span>
                     </a>
-
-                    <span class="block1-content-more txt-m-104 cl9 p-t-21 trans-04">
-            {{ product.price }} тг
-          </span>
-
-                    <div class="block1-wrap-icon flex-c-m flex-w trans-05">
-                        <template v-if="productInCart">
-                            <button @click="decreaseQuantity" class="btn btn-sm btn-outline-dark">-</button>
-                            <span class="mx-2">{{ productInCart.quantity }}</span>
-                            <button @click="increaseQuantity" class="btn btn-sm btn-outline-dark">+</button>
-                        </template>
-                        <template v-else>
-                            <a href="#" class="block1-icon flex-c-m wrap-pic-max-w" @click.prevent="addToCart">
-                                <img src="/assets/images/icons/icon-cart.png" alt="Add to Cart" />
-                            </a>
-                        </template>
-                    </div>
+                    <div class="text-muted small mb-2">{{ product.price }} тг</div>
+                    <span>{{product.description}}</span>
+                </div>
+                <!-- Себет -->
+                <div>
+                    <template v-if="productInCart">
+                        <button @click="decreaseQuantity" class="btn btn-sm btn-outline-dark">-</button>
+                        <span class="mx-2">{{ productInCart.quantity }}</span>
+                        <button @click="increaseQuantity" class="btn btn-sm btn-outline-dark">+</button>
+                    </template>
+                    <template v-else>
+                        <button @click.prevent="addToCart" class="btn btn-sm btn-main cl13">
+                            В корзину
+                        </button>
+                    </template>
                 </div>
             </div>
         </div>
@@ -34,7 +41,7 @@
 
 <script setup>
 import { defineProps, computed } from "vue";
-import { useCartStore } from '@/stores/cart';
+import { useCartStore } from "@/stores/cart";
 
 const props = defineProps({
     product: {
@@ -59,7 +66,6 @@ const addToCart = () => {
     };
 
     cart.add(item);
-    console.log(`${item.title} себетке қосылды`);
 };
 
 const increaseQuantity = () => {
@@ -70,3 +76,49 @@ const decreaseQuantity = () => {
     cart.decrease(props.product.id);
 };
 </script>
+
+<style scoped>
+.btn-main{
+    background-color: #EB7514;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+
+@media (max-width: 768px) {
+    .product-info{
+        display: flex;
+        gap: 20px;
+        justify-content: end;
+        align-items: center;
+    }
+    .product-card {
+        flex-direction: row;
+        text-align: left;
+    }
+
+    .product-image {
+        margin-right: 12px;
+    }
+
+    .product-info {
+        text-align: center;
+        flex: 1;
+        margin-right: 15px
+    }
+
+    .product-info a {
+        font-size: 14px;
+    }
+
+    .product-info .btn {
+        padding: 2px 6px;
+        font-size: 12px;
+    }
+}
+</style>

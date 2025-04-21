@@ -18,7 +18,7 @@ const cartStore = useCartStore();
 
                         <div class="wrap-icon-header">
                             <div class="wrap-cart-header h-full flex-m m-l-10 menu-click">
-                                <div class="icon-header-item flex-c-m trans-04 icon-header-noti" :data-notify="cartStore.items.length">
+                                <div class="main-color icon-header-item flex-c-m trans-04 icon-header-noti" :data-notify="cartStore.items.length">
                                     <CartDropdown/>
                                 </div>
                             </div>
@@ -43,3 +43,10 @@ const cartStore = useCartStore();
         </div>
     </header>
 </template>
+
+<style>
+.icon-header-noti::after,
+.wrap-header-mobile .icon-header-noti::after{
+    background-color: #EB7514;
+}
+</style>
