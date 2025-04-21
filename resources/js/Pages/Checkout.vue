@@ -8,11 +8,11 @@ const cart = useCartStore();
 const subtotal = computed(() => cart.total);
 const products = computed(() => cart.items);
 
-// Форма деректері
+
 const firstName = ref('');
 const lastName = ref('');
 const note = ref('');
-const phone = localStorage.getItem('phone') || '77001112233'; // временно
+const phone = localStorage.getItem('phone') || '77001112233';
 
 const makeOrder = async () => {
     try {
@@ -20,7 +20,7 @@ const makeOrder = async () => {
             product_id: p.id,
             quantity: p.quantity
         }));
-
+        console.log(productData)
         await axios.post('/api/products', {
             phone,
             first_name: firstName.value,
@@ -47,7 +47,7 @@ const makeOrder = async () => {
             <div class="row">
                 <div class="col-md-7 col-lg-8 p-b-50">
                     <h4 class="txt-m-124 cl3 p-b-28">Платежные данные</h4>
-
+                    {{products}}
                     <div class="row p-b-50">
                         <div class="col-sm-6 p-b-23">
                             <div>
