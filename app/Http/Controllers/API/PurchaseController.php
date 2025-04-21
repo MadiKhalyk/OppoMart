@@ -46,6 +46,8 @@ class PurchaseController extends Controller
                 'address' => $validated['address'] ?? null
             ]);
 
+
+
         foreach ($validated['products'] as $item) {
             $product = Product::find($item['product_id']);
             $purchase->products()->create([

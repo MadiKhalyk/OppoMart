@@ -84,6 +84,7 @@ class WhatsappWebhookController extends Controller
 
                             if ($interactiveType == 'button_reply') {
                                 $button = $messages['interactive']['button_reply']['id'] ?? null;
+                                Log::debug($messages);
                                 $this->messageButtonAction($button, $chat);
                             }
                         }
@@ -97,6 +98,7 @@ class WhatsappWebhookController extends Controller
 
     private function messageButtonAction($button, $chat): void
     {
+        Log::debug($button);
         $user = $chat->user;
         switch ($button) {
             case WhatsappMessageButton::CONFIRM->value:
