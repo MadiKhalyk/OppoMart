@@ -29,5 +29,6 @@ export const useCartStore = defineStore('cart', {
         clear() {
             this.items = [];
         }
-    }
+    },
+    persist: true,
 });
