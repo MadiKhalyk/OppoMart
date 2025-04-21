@@ -102,6 +102,7 @@ class WhatsappWebhookController extends Controller
         $user = $chat->user;
         switch ($button) {
             case WhatsappMessageButton::CONFIRM->value:
+                Log::debug($user->purchase);
                 $user->purchase()->update([
                     'status' => true
                 ]);
