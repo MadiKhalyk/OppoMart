@@ -47,7 +47,4 @@ export const useCartStore = defineStore('cart', {
             }
         },
     },
-    persist: {
-        storage: sessionStorage,
-    },
 });
