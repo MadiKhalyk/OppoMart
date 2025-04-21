@@ -47,6 +47,6 @@ const cartStore = useCartStore();
 <style>
 .icon-header-noti::after,
 .wrap-header-mobile .icon-header-noti::after{
-    background-color: #EB7514;
+    background-color: #EB7514 !important;
 }
 </style>
