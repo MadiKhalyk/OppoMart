@@ -19,7 +19,7 @@ const toggleCart = () => {
 
         <div v-if="cartOpen" class="cart-header">
             <div v-for="item in cart.items" :key="item.id" class="cart-item">
-                <img :src="'/storage/' + item.poster" :alt="item.title" />
+                <img class="product-img" :src="'/storage/' + item.poster" :alt="item.title" />
                 <div>
                     <p>{{ item.title }}</p>
                     <p>
@@ -32,7 +32,7 @@ const toggleCart = () => {
                 <p>Итого: {{ cart.total }}тг</p>
                 <router-link
                     to="/checkout"
-                    class="flex-c-m size-a-8 bg10 txt-s-105 cl13 hov-btn2 trans-04 btn-checkout"
+                    class="btn-main flex-c-m size-a-8 bg10 txt-s-105 cl13 hov-btn2 trans-04 btn-checkout"
                 >
                     Оформить заказ
                 </router-link>
@@ -45,5 +45,14 @@ const toggleCart = () => {
 <style scoped>
     .cart-header{
         transform: scale(1);
+    }
+    .product-img{
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+
+    .btn-main{
+        background-color: #EB7514;
     }
 </style>

@@ -1,15 +1,15 @@
 <template>
-    <div class="sec-product bg0 p-t-145 p-b-25">
+    <div class="sec-product bg0 p-t-10 p-b-10">
         <div class="container">
-            <div class="size-a-1 flex-col-c-m p-b-48">
-                <div class="txt-center txt-m-201 cl10 how-pos1-parent m-b-14">
-                    Популярные товары
-                    <div class="how-pos1">
-                        <img src="/assets/images/icons/symbol-02.png" alt="IMG" />
-                    </div>
-                </div>
-                <h3 class="txt-center txt-l-101 cl3 respon1">Наши продукты</h3>
-            </div>
+<!--            <div class="size-a-1 flex-col-c-m p-b-48">-->
+<!--                <div class="txt-center txt-m-201 cl10 how-pos1-parent m-b-14">-->
+<!--                    Популярные товары-->
+<!--                    <div class="how-pos1">-->
+<!--                        <img src="/assets/images/icons/symbol-02.png" alt="IMG" />-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <h3 class="txt-center txt-l-101 cl3 respon1">Наши продукты</h3>-->
+<!--            </div>-->
 
             <div class="p-b-46">
                 <div class="flex-w flex-c-m filter-tope-group">
