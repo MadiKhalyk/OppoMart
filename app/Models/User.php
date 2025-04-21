@@ -47,7 +47,7 @@ class User extends Authenticatable
 
     public function whatsappChat(): BelongsTo
     {
-        return $this->belongsTo(WhatsappChat::class);
+        return $this->belongsTo(WhatsappChat::class, 'id', 'user_id');
     }
 
     public function purchase(): BelongsTo

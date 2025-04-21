@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
+use App\Models\Unit;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -52,10 +53,12 @@ class ProductResource extends Resource
                             ->relationship('category', 'title')
                             ->preload()
                             ->required(),
+                        Forms\Components\Select::make('unit_id')
+                            ->label('Мера')
+                            ->options(Unit::all()->pluck('name', 'id')),
                         Forms\Components\Toggle::make('active')
                             ->label('Показать')
-                            ->default(true)
-                        ,
+                            ->default(true),
                     ])->columns()
             ]);
     }
