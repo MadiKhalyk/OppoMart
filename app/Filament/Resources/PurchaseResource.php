@@ -12,6 +12,7 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Support\Carbon;
 
 class PurchaseResource extends Resource
 {
@@ -34,7 +35,7 @@ class PurchaseResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->defaultSort('status')
+            ->defaultSort('status', 'desc')
             ->columns([
                 TextColumn::make('user.phone')
                     ->label('Телефон'),
@@ -60,7 +61,10 @@ class PurchaseResource extends Resource
                     ->label('Адрес'),
                 IconColumn::make('status')
                     ->label('Статус')
-                    ->boolean()
+                    ->boolean(),
+                TextColumn::make('created_at')
+                    ->label('Дата заказа')
+                    ->formatStateUsing(fn ($state): string => Carbon::parse($state)->format('d.m.Y H:i')),
             ])
             ->filters([
                 //
