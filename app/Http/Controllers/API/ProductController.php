@@ -21,7 +21,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with('category')->get();
-        $categories = Category::all(); // Барлық категорияларды аламыз
+        $categories = Category::all();
 
         return response()->json([
             'products' => ProductCollectionResource::collection($products),

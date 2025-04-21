@@ -22,16 +22,25 @@ const toggleCart = () => {
                 <img :src="'/storage/' + item.poster" :alt="item.title" />
                 <div>
                     <p>{{ item.title }}</p>
-                    <p>{{ item.price }}$ x{{ item.quantity }}</p>
+                    <p>
+                        {{ item.price }}тг x{{ item.quantity }}
+                        {{ item.unit ? item.unit : 'шт' }}
+                    </p>
                 </div>
             </div>
             <div class="cart-footer">
-                <p>Total: {{ cart.total }}$</p>
-                <router-link сlass="flex-c-m size-a-8 bg10 txt-s-105 cl13 hov-btn2 trans-04" to="/checkout" class="btn-checkout">Check Out</router-link>
+                <p>Итого: {{ cart.total }}тг</p>
+                <router-link
+                    to="/checkout"
+                    class="flex-c-m size-a-8 bg10 txt-s-105 cl13 hov-btn2 trans-04 btn-checkout"
+                >
+                    Оформить заказ
+                </router-link>
             </div>
         </div>
     </div>
 </template>
+
 
 <style scoped>
     .cart-header{

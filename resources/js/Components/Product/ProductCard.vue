@@ -7,16 +7,24 @@
                 <div class="block1-content flex-col-c-m p-b-46">
                     <a href="product-single.html" class="txt-m-103 cl3 txt-center hov-cl10 trans-04">
                         {{ product.title }}
+                        <span v-if="product.unit">({{ product.unit }})</span>
                     </a>
 
                     <span class="block1-content-more txt-m-104 cl9 p-t-21 trans-04">
-            {{ product.price }}$
+            {{ product.price }} тг
           </span>
 
                     <div class="block1-wrap-icon flex-c-m flex-w trans-05">
-                        <a href="#" class="block1-icon flex-c-m wrap-pic-max-w" @click.prevent="addToCart">
-                            <img src="/assets/images/icons/icon-cart.png" alt="Add to Cart" />
-                        </a>
+                        <template v-if="productInCart">
+                            <button @click="decreaseQuantity" class="btn btn-sm btn-outline-dark">-</button>
+                            <span class="mx-2">{{ productInCart.quantity }}</span>
+                            <button @click="increaseQuantity" class="btn btn-sm btn-outline-dark">+</button>
+                        </template>
+                        <template v-else>
+                            <a href="#" class="block1-icon flex-c-m wrap-pic-max-w" @click.prevent="addToCart">
+                                <img src="/assets/images/icons/icon-cart.png" alt="Add to Cart" />
+                            </a>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -25,8 +33,8 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
-import { useCartStore } from '@/stores/cart'; // Pinia cart store
+import { defineProps, computed } from "vue";
+import { useCartStore } from '@/stores/cart';
 
 const props = defineProps({
     product: {
@@ -37,8 +45,28 @@ const props = defineProps({
 
 const cart = useCartStore();
 
+const productInCart = computed(() =>
+    cart.items.find(item => item.id === props.product.id)
+);
+
 const addToCart = () => {
-    cart.add(props.product);
-    console.log(`${props.product.title} себетке қосылды`);
+    const item = {
+        id: props.product.id,
+        title: props.product.unit ? `${props.product.title} (${props.product.unit})` : props.product.title,
+        price: props.product.price,
+        poster: props.product.poster,
+        quantity: 1
+    };
+
+    cart.add(item);
+    console.log(`${item.title} себетке қосылды`);
+};
+
+const increaseQuantity = () => {
+    cart.increase(props.product.id);
+};
+
+const decreaseQuantity = () => {
+    cart.decrease(props.product.id);
 };
 </script>
