@@ -1,7 +1,7 @@
 <script setup>
-import { ref, computed } from 'vue';
+import {ref, computed} from 'vue';
 import axios from 'axios';
-import { useCartStore } from '@/stores/cart';
+import {useCartStore} from '@/stores/cart';
 import TheHeader from "@/Components/Header/Header.vue";
 
 const cart = useCartStore();
@@ -20,13 +20,15 @@ const makeOrder = async () => {
             product_id: p.id,
             quantity: p.quantity
         }));
-        console.log(productData)
-        await axios.post('/api/products', {
+        const total_price = subtotal.value;
+
+        await axios.post('/api/purchases', {
             phone,
             first_name: firstName.value,
             last_name: lastName.value,
             note: note.value,
-            products: productData
+            products: productData,
+            total_price: total_price,
         });
 
         alert('Заказ сәтті жіберілді!');
@@ -47,7 +49,6 @@ const makeOrder = async () => {
             <div class="row">
                 <div class="col-md-7 col-lg-8 p-b-50">
                     <h4 class="txt-m-124 cl3 p-b-28">Платежные данные</h4>
-                    {{products}}
                     <div class="row p-b-50">
                         <div class="col-sm-6 p-b-23">
                             <div>
@@ -94,14 +95,19 @@ const makeOrder = async () => {
                             <span>Итого</span>
                         </div>
 
-                        <div v-for="item in products" :key="item.id" class="flex-w flex-sb-m txt-s-101 cl6 bo-b-1 bocl15 p-b-21 p-t-18">
-                            <span>{{ item.title }} <img class="m-rl-3" src="/images/icons/icon-multiply.png" alt="x"> {{ item.quantity }}</span>
-                            <span>{{ item.price * item.quantity }}$</span>
+                        <div v-for="item in products" :key="item.id"
+                             class="flex-w flex-sb-m txt-s-101 cl6 bo-b-1 bocl15 p-b-21 p-t-18">
+                            <span>
+                              {{ item.title }}
+                              <img class="m-rl-3" :src="'/storage/' + item.poster" :alt="item.title">
+                              {{ item.quantity }} {{ item.unit ? 'кг' : 'шт' }}
+                            </span>
+                            <span>{{ item.price * item.quantity }}тг</span>
                         </div>
 
                         <div class="flex-w flex-m txt-m-103 bo-b-1 bocl15 p-tb-23">
                             <span class="size-w-61 cl6">Промежуточный итог</span>
-                            <span class="size-w-62 cl9">{{ subtotal }}$</span>
+                            <span class="size-w-62 cl9">{{ subtotal }}тг</span>
                         </div>
 
                         <div class="flex-w flex-m txt-m-103 p-tb-23">

@@ -3,12 +3,12 @@
         <div class="container">
             <div class="size-a-1 flex-col-c-m p-b-48">
                 <div class="txt-center txt-m-201 cl10 how-pos1-parent m-b-14">
-                    Featured Products
+                    Популярные товары
                     <div class="how-pos1">
                         <img src="/assets/images/icons/symbol-02.png" alt="IMG" />
                     </div>
                 </div>
-                <h3 class="txt-center txt-l-101 cl3 respon1">Our products</h3>
+                <h3 class="txt-center txt-l-101 cl3 respon1">Наши продукты</h3>
             </div>
 
             <div class="p-b-46">
@@ -33,7 +33,7 @@
                 />
             </div>
 
-            <div v-if="loading" class="text-center p-t-20">Loading...</div>
+            <div v-if="loading" class="text-center p-t-20">Загрузка...</div>
             <div v-if="error" class="text-center p-t-20 text-danger">{{ error }}</div>
         </div>
     </div>
@@ -46,23 +46,22 @@ import ProductCard from "./ProductCard.vue";
 
 const activeCategory = ref("*");
 const products = ref([]);
-const categories = ref([{ id: "*", title: "All Products" }]);
+const categories = ref([{ id: "*", title: "Все" }]);
 const loading = ref(false);
 const error = ref(null);
 
 const fetchData = async () => {
     loading.value = true;
     try {
-        const response = await axios.get("http://opto-market.test/api/products");
+        const response = await axios.get("/api/products");
 
-        // Өнімдерді API-дан алу
         products.value = response.data.products.map(product => ({
             ...product,
-            category: product.category || { id: null, title: "Unknown" } // Егер category жоқ болса, placeholder қосамыз
+            category: product.category || { id: null, title: "Unknown" }
         }));
 
-        // Категорияларды API-дан алу
-        categories.value = [{ id: "*", title: "All Products" }, ...response.data.categories];
+
+        categories.value = [{ id: "*", title: "Все" }, ...response.data.categories];
 
     } catch (err) {
         error.value = "Failed to load products.";

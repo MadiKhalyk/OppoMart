@@ -1,23 +1,43 @@
-/.phpunit.cache
-/node_modules
-/public/build
-/public/hot
-/public/storage
-/storage/*.key
-/storage/pail
+# Laravel
 /vendor
-.env
-.env.backup
-.env.production
-.phpactor.json
+/.phpunit.cache
 .phpunit.result.cache
+/storage/*.key
+/storage/framework/cache/data
+/storage/framework/sessions
+/storage/framework/views
+/storage/logs
+/storage/debugbar
+/public/storage
+/public/hot
+/public/build
+.env
+.env.*
+composer.lock
+
+# Node.js & Frontend
+/node_modules
+/.vite
+/dist
+/build
+npm-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+
+# IDE/Editor
+/.idea
+/.vscode
+/.fleet
+/.zed
+.phpactor.json
+
+# Homestead
 Homestead.json
 Homestead.yaml
-npm-debug.log
-yarn-error.log
-/auth.json
-/.fleet
-/.idea
+
+# Laravel Nova
 /.nova
-/.vscode
-/.zed
+
+# Misc
+.DS_Store
+/auth.json

@@ -28,6 +28,24 @@ export const useCartStore = defineStore('cart', {
 
         clear() {
             this.items = [];
-        }
-    }
+        },
+        increase(itemId) {
+            const item = this.items.find(p => p.id === itemId);
+            if (item) {
+                item.quantity += 1;
+            }
+        },
+
+        decrease(itemId) {
+            const item = this.items.find(p => p.id === itemId);
+            if (item) {
+                if (item.quantity > 1) {
+                    item.quantity -= 1;
+                } else {
+                    this.remove(itemId); // quantity 1 болса — товарды өшіреді
+                }
+            }
+        },
+    },
+    persist: true,
 });
