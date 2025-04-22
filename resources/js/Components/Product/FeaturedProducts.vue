@@ -12,11 +12,14 @@
 <!--            </div>-->
 
             <div class="p-b-46">
-                <div class="flex-w flex-c-m filter-tope-group">
+                <div
+                    class="filter-scroll d-flex gap-2 overflow-auto pb-2"
+                    style="white-space: nowrap"
+                >
                     <button
                         v-for="category in categories"
                         :key="category.id"
-                        class="txt-m-104 cl9 hov2 trans-04 p-rl-27 p-b-10"
+                        class="txt-m-104 cl-green hov2 trans-04 p-rl-27 p-b-10 border-0 bg-transparent"
                         :class="{ 'how-active1': activeCategory === category.id }"
                         @click="filterProducts(category.id)"
                     >
@@ -84,3 +87,33 @@ const filterProducts = (categoryId) => {
 
 onMounted(fetchData);
 </script>
+
+<style>
+.filter-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.filter-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.filter-scroll::-webkit-scrollbar-thumb {
+    background: #2e7d32;
+    border-radius: 10px;
+}
+
+.cl-green {
+    color: #2e7d32 !important;
+}
+
+.how-active1 {
+    font-weight: bold;
+    border-bottom: 2px solid #2e7d32;
+}
+</style>

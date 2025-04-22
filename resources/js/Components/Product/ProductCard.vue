@@ -16,10 +16,14 @@
                 <div>
                     <a href="#" class="txt-m-103 cl3 d-block text-truncate mt-2">
                         {{ product.title }}
-                        <span v-if="product.unit">({{ product.unit }})</span>
+                        <span v-if="product.description">({{ product.description }})</span>
                     </a>
-                    <div class="text-muted small mb-2">{{ product.price }} тг</div>
-                    <span>{{product.description}}</span>
+                    <div class="mb-2">
+                        <span class="text-dark fw-bold fs-14 mr-2">{{ product.price }} тг</span>
+                        <span v-if="product.old_price" class="text-muted ms-2 line-through fs-12">
+                        {{ product.old_price }} тг
+                    </span>
+                    </div>
                 </div>
                 <!-- Себет -->
                 <div>
@@ -40,8 +44,8 @@
 </template>
 
 <script setup>
-import { defineProps, computed } from "vue";
-import { useCartStore } from "@/stores/cart";
+import {defineProps, computed} from "vue";
+import {useCartStore} from "@/stores/cart";
 
 const props = defineProps({
     product: {
@@ -78,7 +82,7 @@ const decreaseQuantity = () => {
 </script>
 
 <style scoped>
-.btn-main{
+.btn-main {
     background-color: #EB7514;
 }
 
@@ -91,18 +95,21 @@ const decreaseQuantity = () => {
 
 
 @media (max-width: 768px) {
-    .product-info{
+    .product-info {
         display: flex;
-        gap: 20px;
-        justify-content: end;
+        flex-direction: column;
+        justify-content: center;
         align-items: center;
     }
+
     .product-card {
         flex-direction: row;
         text-align: left;
     }
 
     .product-image {
+        width: 100px;
+        object-fit: cover;
         margin-right: 12px;
     }
 
@@ -119,6 +126,10 @@ const decreaseQuantity = () => {
     .product-info .btn {
         padding: 2px 6px;
         font-size: 12px;
+    }
+
+    .line-through{
+        text-decoration: line-through;
     }
 }
 </style>
