@@ -17,20 +17,25 @@
                     <a href="#" class="txt-m-103 cl3 d-block text-truncate mt-2">
                         {{ product.title }}
                         <br>
-                        <span class="text-muted ms-2 fs-12 marquee" v-if="product.description" v-html="product.description"></span>
+                        <span
+                            class="text-muted ms-2 fs-12 description-wrapper"
+                            v-if="product.description">
+                            <span class="description" v-html="product.description"></span>
+                        </span>
                     </a>
-                    <div class="mb-2">
+                </div>
+
+                <div class="dis-flex align-items-center bottom">
+                    <div class="mb-2 m-r-30 price-wrapper">
                         <span class="text-dark fw-bold fs-14 mr-2">{{ product.price }} тг</span>
+                        <br>
                         <span v-if="product.old_price" class="text-muted ms-2 line-through fs-12">
                         {{ product.old_price }} тг
                     </span>
                     </div>
-                </div>
-
-                <div>
                     <template v-if="productInCart">
                         <button @click="decreaseQuantity" class="btn btn-sm btn-outline-dark">-</button>
-                        <span class="mx-2">{{ productInCart.quantity }}{{product.unit}}</span>
+                        <span class="mx-2">{{ productInCart.quantity }}{{ product.unit }}</span>
                         <button @click="increaseQuantity" class="btn btn-sm btn-outline-dark">+</button>
                     </template>
                     <template v-else>
@@ -94,25 +99,20 @@ const decreaseQuantity = () => {
     text-align: center;
 }
 
-.marquee {
-    width: 200px;
-    white-space: nowrap;
-    box-sizing: border-box;
-    animation: marquee 10s linear infinite;
-    display: inline-block;
-    font-size: 12px;
-    color: #6c757d; /* text-muted түстес */
+.description-wrapper {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
 }
 
-
-@keyframes marquee {
-    0% {
-        transform: translateX(20%);
-    }
-
-    100% {
-        transform: translateX(-100%);
-    }
+.description-wrapper * {
+    font-size: 12px;
+    color: #6c757d;
+    line-height: 1.2;
+    text-wrap: auto;
 }
 
 
@@ -136,7 +136,7 @@ const decreaseQuantity = () => {
     }
 
     .product-info {
-        text-align: center;
+        gap: 15px;
         flex: 1;
         margin-right: 15px
     }
@@ -150,8 +150,16 @@ const decreaseQuantity = () => {
         font-size: 12px;
     }
 
-    .line-through{
+    .line-through {
         text-decoration: line-through;
+    }
+
+    .bottom {
+        width: 100%;
+    }
+
+    .price-wrapper{
+        flex-direction: column;
     }
 
 }

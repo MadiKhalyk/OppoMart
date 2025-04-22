@@ -1,7 +1,7 @@
 <script setup>
-import { ref, computed } from 'vue';
+import {ref, computed} from 'vue';
 import axios from 'axios';
-import { useCartStore } from '@/stores/cart';
+import {useCartStore} from '@/stores/cart';
 import TheHeader from "@/Components/Header/Header.vue";
 
 // Cart store
@@ -23,6 +23,10 @@ const entrance = ref('');
 const floor = ref('');
 
 const makeOrder = async () => {
+    if (!firstName.value || !street.value || !house.value || !apartment.value) {
+        alert('Пожалуйста, заполните все обязательные поля: имя, улица, дом, квартира.');
+        return;
+    }
     try {
         // Forming the full address as a single string
         const fullAddress = `улица: ${street.value}, дом: ${house.value}, кв: ${apartment.value}, подъезд: ${entrance.value}, этаж: ${floor.value}`;
@@ -53,7 +57,7 @@ const makeOrder = async () => {
 </script>
 
 <template>
-    <TheHeader />
+    <TheHeader/>
     <div class="bg0 p-t-20 p-b-50">
         <div class="container">
             <div class="row">
@@ -63,34 +67,34 @@ const makeOrder = async () => {
                         <div class="col-sm-6">
                             <input v-model="firstName"
                                    class="txt-s-120 cl3 size-a-21 bo-all-1 bocl15 p-rl-20 focus1"
-                                   type="text" placeholder="Имя *" />
+                                   type="text" placeholder="Имя *"/>
                         </div>
                     </div>
                     <div class="row g-2 p-b-20">
                         <div class="col-sm-6">
                             <input v-model="street"
                                    class="txt-s-120 cl3 size-a-21 bo-all-1 bocl15 p-rl-20 focus1"
-                                   type="text" placeholder="Улица" />
+                                   type="text" placeholder="Улица"/>
                         </div>
                         <div class="col-sm-3">
                             <input v-model="house"
                                    class="txt-s-120 cl3 size-a-21 bo-all-1 bocl15 p-rl-20 focus1"
-                                   type="text" placeholder="Дом" />
+                                   type="text" placeholder="Дом"/>
                         </div>
                         <div class="col-sm-3">
                             <input v-model="apartment"
                                    class="txt-s-120 cl3 size-a-21 bo-all-1 bocl15 p-rl-20 focus1"
-                                   type="text" placeholder="Кв" />
+                                   type="text" placeholder="Кв"/>
                         </div>
                         <div class="col-sm-3">
                             <input v-model="entrance"
                                    class="txt-s-120 cl3 size-a-21 bo-all-1 bocl15 p-rl-20 focus1"
-                                   type="text" placeholder="Подъезд" />
+                                   type="text" placeholder="Подъезд"/>
                         </div>
                         <div class="col-sm-3">
                             <input v-model="floor"
                                    class="txt-s-120 cl3 size-a-21 bo-all-1 bocl15 p-rl-20 focus1"
-                                   type="text" placeholder="Этаж" />
+                                   type="text" placeholder="Этаж"/>
                         </div>
                     </div>
                 </div>
@@ -106,19 +110,16 @@ const makeOrder = async () => {
 
                         <div v-for="item in products" :key="item.id"
                              class="flex-w flex-sb-m txt-s-101 cl6 bo-b-1 bocl15 p-b-21 p-t-18">
-                            <span>
                             <img class="m-rl-3 product-img" :src="'/storage/' + item.poster" :alt="item.title">
+                            <div>
+                                <p>
                                 {{ item.title }}
                                 {{ item.quantity }} {{ item.unit ? 'кг' : 'шт' }}
-                            </span>
-                            <span>{{ item.price * item.quantity }}тг</span>
+                            </p>
+                                <p>{{ item.price * item.quantity }}тг</p>
+                            </div>
 
                         </div>
-                        <div class="flex-w flex-m txt-m-103 bo-b-1 bocl15 p-tb-23">
-                            <span class="size-w-61 cl6">Промежуточный итог</span>
-                            <span class="size-w-62 cl9">{{ subtotal }}тг</span>
-                        </div>
-
                         <div class="flex-w flex-m txt-m-103 p-tb-23">
                             <span class="size-w-61 cl6">Итого</span>
                             <span class="size-w-62 main-color">{{ subtotal }}тг</span>
@@ -136,15 +137,17 @@ const makeOrder = async () => {
 </template>
 
 <style scoped>
-.btn-main{
+.btn-main {
     background-color: #EB7514;
 }
-.main-color{
+
+.main-color {
     color: #EB7514;
 }
-.product-img{
-    width: 100px;
-    height: 100px;
+
+.product-img {
+    width: 50px;
+    height: 50px;
     object-fit: cover;
 }
 </style>
