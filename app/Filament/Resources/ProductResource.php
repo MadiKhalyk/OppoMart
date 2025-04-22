@@ -7,6 +7,7 @@ use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use App\Models\Unit;
 use Filament\Forms;
+use Filament\Forms\Components\RichEditor;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -36,6 +37,9 @@ class ProductResource extends Resource
                         Forms\Components\TextInput::make('title')
                             ->required()
                             ->label('Название'),
+                        RichEditor::make('description')
+                            ->required()
+                            ->columnSpanFull(),
                         Forms\Components\TextInput::make('price')
                             ->label('Цена')
                             ->numeric()
@@ -70,6 +74,9 @@ class ProductResource extends Resource
                 TextColumn::make('title')
                     ->searchable()
                     ->label('Название'),
+                TextColumn::make('description')
+                    ->label('Текст')
+                    ->formatStateUsing(fn ($state) => strip_tags($state)),
                 TextColumn::make('price')
                     ->label('Цена'),
                 TextColumn::make('old_price')

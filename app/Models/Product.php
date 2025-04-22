@@ -12,7 +12,7 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes, ProductRelations;
 
-    protected $fillable = ['title', 'poster', 'price', 'old_price', 'category_id', 'active', 'unit'];
+    protected $fillable = ['title', 'poster', 'price', 'old_price', 'category_id', 'active', 'unit', 'description'];
 
     protected $table = 'products';
 

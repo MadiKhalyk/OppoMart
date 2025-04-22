@@ -63,8 +63,25 @@ const fetchData = async () => {
             category: product.category || { id: null, title: "Unknown" }
         }));
 
+        // Категорияларды аламыз
+        let fetchedCategories = response.data.categories;
 
-        categories.value = [{ id: "*", title: "Все" }, ...response.data.categories];
+        // Рекомендуется-ны біріншіге шығарамыз
+        fetchedCategories.sort((a, b) => {
+            if (a.title === 'Рекомендуется') return -1;
+            if (b.title === 'Рекомендуется') return 1;
+            return 0;
+        });
+
+        categories.value = fetchedCategories;
+
+        // По умолчанию Рекомендуется-ны таңдау
+        const recommendedCategory = categories.value.find(c => c.title === 'Рекомендуется');
+        if (recommendedCategory) {
+            activeCategory.value = recommendedCategory.id;
+        } else {
+            activeCategory.value = categories.value[0]?.id; // safety fallback
+        }
 
     } catch (err) {
         error.value = "Failed to load products.";
@@ -72,6 +89,7 @@ const fetchData = async () => {
         loading.value = false;
     }
 };
+
 
 const filteredProducts = computed(() => {
     if (activeCategory.value === "*") {

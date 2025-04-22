@@ -16,7 +16,8 @@
                 <div>
                     <a href="#" class="txt-m-103 cl3 d-block text-truncate mt-2">
                         {{ product.title }}
-                        <span v-if="product.description">({{ product.description }})</span>
+                        <br>
+                        <span class="text-muted ms-2 fs-12 marquee" v-if="product.description" v-html="product.description"></span>
                     </a>
                     <div class="mb-2">
                         <span class="text-dark fw-bold fs-14 mr-2">{{ product.price }} тг</span>
@@ -25,11 +26,11 @@
                     </span>
                     </div>
                 </div>
-                <!-- Себет -->
+
                 <div>
                     <template v-if="productInCart">
                         <button @click="decreaseQuantity" class="btn btn-sm btn-outline-dark">-</button>
-                        <span class="mx-2">{{ productInCart.quantity }}</span>
+                        <span class="mx-2">{{ productInCart.quantity }}{{product.unit}}</span>
                         <button @click="increaseQuantity" class="btn btn-sm btn-outline-dark">+</button>
                     </template>
                     <template v-else>
@@ -93,6 +94,27 @@ const decreaseQuantity = () => {
     text-align: center;
 }
 
+.marquee {
+    width: 200px;
+    white-space: nowrap;
+    box-sizing: border-box;
+    animation: marquee 10s linear infinite;
+    display: inline-block;
+    font-size: 12px;
+    color: #6c757d; /* text-muted түстес */
+}
+
+
+@keyframes marquee {
+    0% {
+        transform: translateX(20%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
 
 @media (max-width: 768px) {
     .product-info {
@@ -131,5 +153,6 @@ const decreaseQuantity = () => {
     .line-through{
         text-decoration: line-through;
     }
+
 }
 </style>
