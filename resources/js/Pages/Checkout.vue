@@ -54,52 +54,43 @@ const makeOrder = async () => {
 
 <template>
     <TheHeader />
-    <div class="bg0 p-t-95 p-b-50">
+    <div class="bg0 p-t-20 p-b-50">
         <div class="container">
             <div class="row">
-                <div class="col-md-7 col-lg-8 p-b-50">
-                    <h4 class="txt-m-124 cl3 p-b-28">Данные покупателя</h4>
-
-                    <div class="row p-b-30">
-                        <div class="col-sm-6 p-b-23">
-                            <label class="txt-s-101 cl6 p-b-10">Имя <span class="cl12">*</span></label>
+                <div class="col-md-7 col-lg-8 p-b-10">
+                    <h4 class="txt-m-120 cl3 p-b-20">Данные покупателя</h4>
+                    <div class="row g-2 p-b-20">
+                        <div class="col-sm-6">
                             <input v-model="firstName"
                                    class="txt-s-120 cl3 size-a-21 bo-all-1 bocl15 p-rl-20 focus1"
-                                   type="text" name="first-name" />
+                                   type="text" placeholder="Имя *" />
                         </div>
                     </div>
-
-                    <h4 class="txt-m-124 cl3 p-b-28">Адрес доставки</h4>
-                    <div class="row p-b-30">
-                        <div class="col-sm-6 p-b-23">
-                            <label class="txt-s-101 cl6 p-b-10">Улица</label>
+                    <div class="row g-2 p-b-20">
+                        <div class="col-sm-6">
                             <input v-model="street"
                                    class="txt-s-120 cl3 size-a-21 bo-all-1 bocl15 p-rl-20 focus1"
-                                   type="text" />
+                                   type="text" placeholder="Улица" />
                         </div>
-                        <div class="col-sm-3 p-b-23">
-                            <label class="txt-s-101 cl6 p-b-10">Дом</label>
+                        <div class="col-sm-3">
                             <input v-model="house"
                                    class="txt-s-120 cl3 size-a-21 bo-all-1 bocl15 p-rl-20 focus1"
-                                   type="text" />
+                                   type="text" placeholder="Дом" />
                         </div>
-                        <div class="col-sm-3 p-b-23">
-                            <label class="txt-s-101 cl6 p-b-10">Кв</label>
+                        <div class="col-sm-3">
                             <input v-model="apartment"
                                    class="txt-s-120 cl3 size-a-21 bo-all-1 bocl15 p-rl-20 focus1"
-                                   type="text" />
+                                   type="text" placeholder="Кв" />
                         </div>
-                        <div class="col-sm-3 p-b-23">
-                            <label class="txt-s-101 cl6 p-b-10">Подъезд</label>
+                        <div class="col-sm-3">
                             <input v-model="entrance"
                                    class="txt-s-120 cl3 size-a-21 bo-all-1 bocl15 p-rl-20 focus1"
-                                   type="text" />
+                                   type="text" placeholder="Подъезд" />
                         </div>
-                        <div class="col-sm-3 p-b-23">
-                            <label class="txt-s-101 cl6 p-b-10">Этаж</label>
+                        <div class="col-sm-3">
                             <input v-model="floor"
                                    class="txt-s-120 cl3 size-a-21 bo-all-1 bocl15 p-rl-20 focus1"
-                                   type="text" />
+                                   type="text" placeholder="Этаж" />
                         </div>
                     </div>
                 </div>
@@ -116,8 +107,8 @@ const makeOrder = async () => {
                         <div v-for="item in products" :key="item.id"
                              class="flex-w flex-sb-m txt-s-101 cl6 bo-b-1 bocl15 p-b-21 p-t-18">
                             <span>
+                            <img class="m-rl-3 product-img" :src="'/storage/' + item.poster" :alt="item.title">
                                 {{ item.title }}
-                                <img class="m-rl-3 product-img" :src="'/storage/' + item.poster" :alt="item.title">
                                 {{ item.quantity }} {{ item.unit ? 'кг' : 'шт' }}
                             </span>
                             <span>{{ item.price * item.quantity }}тг</span>
