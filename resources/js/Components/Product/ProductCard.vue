@@ -138,7 +138,8 @@ const decreaseQuantity = () => {
     .product-info {
         gap: 15px;
         flex: 1;
-        margin-right: 15px
+        margin-right: 15px;
+        align-items: self-start;
     }
 
     .product-info a {
