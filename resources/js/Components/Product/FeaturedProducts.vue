@@ -1,15 +1,14 @@
 <template>
     <div class="sec-product bg0 p-t-10 p-b-10">
-        <!-- swipe-контейнерге overflow және position қосылды -->
-        <div class="swipe-container"
-        >
+        <div class="swipe-container">
             <div class="container">
                 <!-- Категориялар -->
                 <div class="p-b-46">
-                    <div class="filter-scroll d-flex gap-2 overflow-auto pb-2" style="white-space: nowrap">
+                    <div ref="categoriesContainer" class="filter-scroll d-flex gap-2 overflow-auto pb-2" style="white-space: nowrap">
                         <button
                             v-for="category in categories"
                             :key="category.id"
+                            :ref="el => { if (category.id === activeCategory) activeCategoryRef = el }"
                             class="txt-m-104 cl-green hov2 trans-04 p-rl-10 p-b-10 border-0 bg-transparent"
                             :class="{ 'how-active1': activeCategory === category.id }"
                             @click="filterProducts(category.id)"
@@ -40,12 +39,13 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, nextTick } from "vue";
 import axios from "axios";
 import ProductCard from "./ProductCard.vue";
-import Vue3TouchEvents from 'vue3-touch-events';
 
 const activeCategory = ref("*");
+const activeCategoryRef = ref(null);
+const categoriesContainer = ref(null);
 const products = ref([]);
 const categories = ref([{ id: "*", title: "Все" }]);
 const loading = ref(false);
@@ -62,7 +62,6 @@ const fetchData = async () => {
             category: product.category || { id: null, title: "Unknown" }
         }));
 
-        // Категорияларды аламыз
         let fetchedCategories = response.data.categories;
         fetchedCategories.sort((a, b) => {
             if (a.title === 'Рекомендуется') return -1;
@@ -72,68 +71,67 @@ const fetchData = async () => {
 
         categories.value = fetchedCategories;
 
-        // Әдепкі категорияны таңдау
         const recommendedCategory = categories.value.find(c => c.title === 'Рекомендуется');
-        if (recommendedCategory) {
-            activeCategory.value = recommendedCategory.id;
-        } else {
-            activeCategory.value = categories.value[0]?.id;
-        }
+        activeCategory.value = recommendedCategory ? recommendedCategory.id : categories.value[0]?.id;
 
     } catch (err) {
         error.value = "Failed to load products.";
     } finally {
         loading.value = false;
+        nextTick(scrollToActiveCategory);
     }
 };
 
 // Өнімдерді фильтрациялау
 const filteredProducts = computed(() => {
-    if (activeCategory.value === "*") {
-        return products.value;
-    }
-    return products.value.filter(product => product.category && product.category.id === activeCategory.value);
+    if (activeCategory.value === "*") return products.value;
+    return products.value.filter(product => product.category?.id === activeCategory.value);
 });
 
-// Келесі категорияға өту
-const nextCategory = () => {
-    const index = categories.value.findIndex(c => c.id === activeCategory.value);
-    if (index < categories.value.length - 1) {
-        activeCategory.value = categories.value[index + 1].id;
+// Категорияларды скроллдау
+const scrollToActiveCategory = () => {
+    if (activeCategoryRef.value && categoriesContainer.value) {
+        const container = categoriesContainer.value;
+        const button = activeCategoryRef.value;
+
+        const containerWidth = container.offsetWidth;
+        const buttonLeft = button.offsetLeft;
+        const buttonWidth = button.offsetWidth;
+
+        container.scrollTo({
+            left: buttonLeft - (containerWidth / 2) + (buttonWidth / 2),
+            behavior: 'smooth'
+        });
     }
 };
 
-// Алдыңғы категорияға өту
-const prevCategory = () => {
-    const index = categories.value.findIndex(c => c.id === activeCategory.value);
-    if (index > 0) {
-        activeCategory.value = categories.value[index - 1].id;
-    }
+// Категорияларды ауыстыру
+const changeCategory = (newCategoryId) => {
+    activeCategory.value = newCategoryId;
+    nextTick(scrollToActiveCategory);
 };
 
-// Свайп оқиғаларын өңдеу
+// Свайп оқиғалары
 const onSwipe = (direction) => {
-    if (direction === "left") {
-        nextCategory();
-    } else if (direction === "right") {
-        prevCategory();
+    const currentIndex = categories.value.findIndex(c => c.id === activeCategory.value);
+
+    if (direction === "left" && currentIndex < categories.value.length - 1) {
+        changeCategory(categories.value[currentIndex + 1].id);
+    } else if (direction === "right" && currentIndex > 0) {
+        changeCategory(categories.value[currentIndex - 1].id);
     }
 };
 
+// Категорияны фильтрлеу
 const filterProducts = (categoryId) => {
-    activeCategory.value = categoryId;
+    changeCategory(categoryId);
 };
 
 onMounted(fetchData);
 </script>
 
 <style>
-.swipe-container {
-    width: 100%;
-    position: relative;
-    touch-action: pan-y; /* вертикальды swipe үшін міндетті */
-}
-
+/* Алдыңғы стильдер сақталады */
 .filter-scroll {
     display: flex;
     gap: 12px;
@@ -142,29 +140,11 @@ onMounted(fetchData);
     white-space: nowrap;
     padding-bottom: 8px;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox үшін */
+    scrollbar-width: none;
 }
 
 .filter-scroll::-webkit-scrollbar {
-    display: none; /* Chrome/Safari үшін */
-}
-.filter-scroll {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    padding-bottom: 8px;
-    -webkit-overflow-scrolling: touch;
-}
-
-.filter-scroll::-webkit-scrollbar {
-    height: 6px;
-}
-
-.filter-scroll::-webkit-scrollbar-thumb {
-    background: #2e7d32;
-    border-radius: 10px;
+    display: none;
 }
 
 .cl-green {
@@ -174,5 +154,17 @@ onMounted(fetchData);
 .how-active1 {
     font-weight: bold;
     border-bottom: 2px solid #2e7d32;
+}
+
+.swipe-container {
+    width: 100%;
+    position: relative;
+    touch-action: pan-y;
+}
+
+@media  screen and (max-width: 768px){
+    .isotope-grid{
+        height: 80vh;
+    }
 }
 </style>
