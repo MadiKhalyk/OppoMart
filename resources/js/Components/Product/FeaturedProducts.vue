@@ -1,22 +1,13 @@
 <template>
     <div class="sec-product bg0 p-t-10 p-b-10">
-        <div class="container">
-<!--            <div class="size-a-1 flex-col-c-m p-b-48">-->
-<!--                <div class="txt-center txt-m-201 cl10 how-pos1-parent m-b-14">-->
-<!--                    Популярные товары-->
-<!--                    <div class="how-pos1">-->
-<!--                        <img src="/assets/images/icons/symbol-02.png" alt="IMG" />-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <h3 class="txt-center txt-l-101 cl3 respon1">Наши продукты</h3>-->
-<!--            </div>-->
+        <div class="container"
+             v-touch:swipe="onSwipe"
+        >
 
             <div class="p-b-46">
                 <div
                     class="filter-scroll d-flex gap-2 overflow-auto pb-2"
                     style="white-space: nowrap"
-                    v-touch:swipe.left="nextCategory"
-                    v-touch:swipe.right="prevCategory"
                 >
                     <button
                         v-for="category in categories"
@@ -112,6 +103,14 @@ const prevCategory = () => {
     const index = categories.value.findIndex(c => c.id === activeCategory.value);
     if (index > 0) {
         activeCategory.value = categories.value[index - 1].id;
+    }
+};
+
+const onSwipe = (direction) => {
+    if (direction === "left") {
+        nextCategory();
+    } else if (direction === "right") {
+        prevCategory();
     }
 };
 
