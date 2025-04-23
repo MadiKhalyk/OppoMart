@@ -15,9 +15,9 @@ export const useCartStore = defineStore('cart', {
             console.log('Item added:', item);
             const existing = this.items.find(p => p.id === item.id);
             if (existing) {
-                existing.quantity += 1;
+                existing.quantity += item.quantity ?? 1;
             } else {
-                this.items.push({ ...item, quantity: 1 });
+                this.items.push({ ...item, quantity: item.quantity ?? 1 });
             }
         },
 
@@ -27,6 +27,13 @@ export const useCartStore = defineStore('cart', {
 
         clear() {
             this.items = [];
+        },
+
+        updateQuantity(itemId, quantity) {
+            const item = this.items.find(p => p.id === itemId);
+            if (item) {
+                item.quantity = quantity;
+            }
         },
 
         increase(itemId) {
@@ -46,5 +53,7 @@ export const useCartStore = defineStore('cart', {
                 }
             }
         },
+
+
     },
 });

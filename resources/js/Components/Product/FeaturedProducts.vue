@@ -15,11 +15,13 @@
                 <div
                     class="filter-scroll d-flex gap-2 overflow-auto pb-2"
                     style="white-space: nowrap"
+                    v-touch:swipe.left="nextCategory"
+                    v-touch:swipe.right="prevCategory"
                 >
                     <button
                         v-for="category in categories"
                         :key="category.id"
-                        class="txt-m-104 cl-green hov2 trans-04 p-rl-27 p-b-10 border-0 bg-transparent"
+                        class="txt-m-104 cl-green hov2 trans-04 p-rl-10 p-b-10 border-0 bg-transparent"
                         :class="{ 'how-active1': activeCategory === category.id }"
                         @click="filterProducts(category.id)"
                     >
@@ -98,6 +100,20 @@ const filteredProducts = computed(() => {
     console.log(activeCategory.value)
     return products.value.filter(product => product.category && product.category.id === activeCategory.value);
 });
+
+const nextCategory = () => {
+    const index = categories.value.findIndex(c => c.id === activeCategory.value);
+    if (index < categories.value.length - 1) {
+        activeCategory.value = categories.value[index + 1].id;
+    }
+};
+
+const prevCategory = () => {
+    const index = categories.value.findIndex(c => c.id === activeCategory.value);
+    if (index > 0) {
+        activeCategory.value = categories.value[index - 1].id;
+    }
+};
 
 const filterProducts = (categoryId) => {
     activeCategory.value = categoryId;

@@ -18,7 +18,7 @@
                         {{ product.title }}
                         <br>
                         <span
-                            class="text-muted ms-2 fs-12 description-wrapper"
+                            class="text-muted mt-1 ms-2 fs-12 description-wrapper"
                             v-if="product.description">
                             <span class="description" v-html="product.description"></span>
                         </span>
@@ -78,12 +78,26 @@ const addToCart = () => {
     cart.add(item);
 };
 
+const isKilogram = computed(() => props.product.unit === 'кг');
+
 const increaseQuantity = () => {
-    cart.increase(props.product.id);
+    if (productInCart.value) {
+        const step = isKilogram.value ? 0.25 : 1;
+        const newQuantity = parseFloat((productInCart.value.quantity + step).toFixed(2));
+        cart.updateQuantity(props.product.id, newQuantity);
+    }
 };
 
 const decreaseQuantity = () => {
-    cart.decrease(props.product.id);
+    if (productInCart.value) {
+        const step = isKilogram.value ? 0.25 : 1;
+        const newQuantity = parseFloat((productInCart.value.quantity - step).toFixed(2));
+        if (newQuantity >= step) {
+            cart.updateQuantity(props.product.id, newQuantity);
+        } else {
+            cart.remove(props.product.id);
+        }
+    }
 };
 </script>
 
@@ -92,31 +106,30 @@ const decreaseQuantity = () => {
     background-color: #EB7514;
 }
 
-.product-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.description-wrapper {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 200px;
-}
-
-.description-wrapper * {
-    font-size: 12px;
-    color: #6c757d;
-    line-height: 1.2;
-    text-wrap: auto;
-}
-
 
 @media (max-width: 768px) {
+    .product-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .description-wrapper {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px;
+    }
+
+    .description-wrapper * {
+        font-size: 12px;
+        color: #6c757d;
+        line-height: 1.2;
+        text-wrap: auto;
+    }
     .product-info {
         display: flex;
         flex-direction: column;

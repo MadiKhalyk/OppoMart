@@ -21,6 +21,7 @@ const house = ref('');
 const apartment = ref('');
 const entrance = ref('');
 const floor = ref('');
+const changeFrom = ref('');
 
 const makeOrder = async () => {
     if (!firstName.value || !street.value || !house.value || !apartment.value) {
@@ -29,7 +30,8 @@ const makeOrder = async () => {
     }
     try {
         // Forming the full address as a single string
-        const fullAddress = `улица: ${street.value}, дом: ${house.value}, кв: ${apartment.value}, подъезд: ${entrance.value}, этаж: ${floor.value}`;
+        const fullAddress = `улица: ${street.value}, дом: ${house.value}, кв: ${apartment.value}, подъезд: ${entrance.value}, этаж: ${floor.value}${changeFrom.value ? `, сдача с: ${changeFrom.value}тг` : ''}`;
+
 
         const productData = products.value.map(p => ({
             product_id: p.id,
@@ -58,7 +60,7 @@ const makeOrder = async () => {
 
 <template>
     <TheHeader/>
-    <div class="bg0 p-t-20 p-b-50">
+    <div class="bg0 p-t-90 p-b-50">
         <div class="container">
             <div class="row">
                 <div class="col-md-7 col-lg-8 p-b-10">
@@ -96,6 +98,11 @@ const makeOrder = async () => {
                                    class="txt-s-120 cl3 size-a-21 bo-all-1 bocl15 p-rl-20 focus1"
                                    type="text" placeholder="Этаж"/>
                         </div>
+                        <div class="col-sm-6">
+                            <input v-model="changeFrom"
+                                   class="txt-s-120 cl3 size-a-21 bo-all-1 bocl15 p-rl-20 focus1"
+                                   type="number" placeholder="Сдача с (тг)"/>
+                        </div>
                     </div>
                 </div>
 
@@ -113,9 +120,9 @@ const makeOrder = async () => {
                             <img class="m-rl-3 product-img" :src="'/storage/' + item.poster" :alt="item.title">
                             <div>
                                 <p>
-                                {{ item.title }}
-                                {{ item.quantity }} {{ item.unit ? 'кг' : 'шт' }}
-                            </p>
+                                    {{ item.title }}
+                                    {{ item.quantity }} {{ item.unit ? 'кг' : 'шт' }}
+                                </p>
                                 <p>{{ item.price * item.quantity }}тг</p>
                             </div>
 
