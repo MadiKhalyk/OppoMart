@@ -3,7 +3,7 @@
         <div class="swipe-container">
             <div class="container">
                 <!-- Категориялар -->
-                <div class="p-b-46">
+                <div class="p-b-30">
                     <div ref="categoriesContainer" class="filter-scroll d-flex gap-2 overflow-auto pb-2" style="white-space: nowrap">
                         <button
                             v-for="category in categories"
@@ -165,7 +165,7 @@ onMounted(fetchData);
 @media  screen and (max-width: 768px){
     .isotope-grid{
         flex-direction: column;
-        margin-bottom: 20px !important;
+        margin-bottom: 10px !important;
         height: 80vh;
     }
 }
