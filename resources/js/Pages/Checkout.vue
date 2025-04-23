@@ -101,7 +101,7 @@ const makeOrder = async () => {
                         <div class="col-sm-6">
                             <input v-model="changeFrom"
                                    class="txt-s-120 cl3 size-a-21 bo-all-1 bocl15 p-rl-20 focus1"
-                                   type="number" placeholder="Сдача с (тг)"/>
+                                   type="text" placeholder="Сдача с (тг)"/>
                         </div>
                     </div>
                 </div>
