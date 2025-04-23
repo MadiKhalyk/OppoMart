@@ -121,7 +121,7 @@ const makeOrder = async () => {
                             <div>
                                 <p>
                                     {{ item.title }}
-                                    {{ item.quantity }} {{ item.unit ? 'кг' : 'шт' }}
+                                    {{ item.quantity }}  {{ item.unit ? 'кг' : 'шт' }}
                                 </p>
                                 <p>{{ item.price * item.quantity }}тг</p>
                             </div>

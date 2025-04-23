@@ -166,7 +166,7 @@ onMounted(fetchData);
     .isotope-grid{
         flex-direction: column;
         margin-bottom: 10px !important;
-        height: 80vh;
+        min-height: 80vh;
     }
 }
 </style>
