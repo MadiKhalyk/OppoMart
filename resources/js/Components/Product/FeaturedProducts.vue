@@ -1,36 +1,38 @@
 <template>
     <div class="sec-product bg0 p-t-10 p-b-10">
-        <div class="container"
+        <!-- swipe-контейнерге overflow және position қосылды -->
+        <div class="swipe-container"
              v-touch:swipe="onSwipe"
         >
-
-            <div class="p-b-46">
-                <div
-                    class="filter-scroll d-flex gap-2 overflow-auto pb-2"
-                    style="white-space: nowrap"
-                >
-                    <button
-                        v-for="category in categories"
-                        :key="category.id"
-                        class="txt-m-104 cl-green hov2 trans-04 p-rl-10 p-b-10 border-0 bg-transparent"
-                        :class="{ 'how-active1': activeCategory === category.id }"
-                        @click="filterProducts(category.id)"
-                    >
-                        {{ category.title }}
-                    </button>
+            <div class="container">
+                <!-- Категориялар -->
+                <div class="p-b-46">
+                    <div class="filter-scroll d-flex gap-2 overflow-auto pb-2" style="white-space: nowrap">
+                        <button
+                            v-for="category in categories"
+                            :key="category.id"
+                            class="txt-m-104 cl-green hov2 trans-04 p-rl-10 p-b-10 border-0 bg-transparent"
+                            :class="{ 'how-active1': activeCategory === category.id }"
+                            @click="filterProducts(category.id)"
+                        >
+                            {{ category.title }}
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row isotope-grid">
-                <ProductCard
-                    v-for="product in filteredProducts"
-                    :key="product.id"
-                    :product="product"
-                />
-            </div>
+                <!-- Өнімдер -->
+                <div class="row isotope-grid">
+                    <ProductCard
+                        v-for="product in filteredProducts"
+                        :key="product.id"
+                        :product="product"
+                    />
+                </div>
 
-            <div v-if="loading" class="text-center p-t-20">Загрузка...</div>
-            <div v-if="error" class="text-center p-t-20 text-danger">{{ error }}</div>
+                <!-- Жүктелуде -->
+                <div v-if="loading" class="text-center p-t-20">Загрузка...</div>
+                <div v-if="error" class="text-center p-t-20 text-danger">{{ error }}</div>
+            </div>
         </div>
     </div>
 </template>
@@ -39,6 +41,7 @@
 import { ref, computed, onMounted } from "vue";
 import axios from "axios";
 import ProductCard from "./ProductCard.vue";
+import Vue3TouchEvents from 'vue3-touch-events';
 
 const activeCategory = ref("*");
 const products = ref([]);
@@ -46,6 +49,7 @@ const categories = ref([{ id: "*", title: "Все" }]);
 const loading = ref(false);
 const error = ref(null);
 
+// Деректерді жүктеу
 const fetchData = async () => {
     loading.value = true;
     try {
@@ -58,8 +62,6 @@ const fetchData = async () => {
 
         // Категорияларды аламыз
         let fetchedCategories = response.data.categories;
-
-        // Рекомендуется-ны біріншіге шығарамыз
         fetchedCategories.sort((a, b) => {
             if (a.title === 'Рекомендуется') return -1;
             if (b.title === 'Рекомендуется') return 1;
@@ -68,12 +70,12 @@ const fetchData = async () => {
 
         categories.value = fetchedCategories;
 
-        // По умолчанию Рекомендуется-ны таңдау
+        // Әдепкі категорияны таңдау
         const recommendedCategory = categories.value.find(c => c.title === 'Рекомендуется');
         if (recommendedCategory) {
             activeCategory.value = recommendedCategory.id;
         } else {
-            activeCategory.value = categories.value[0]?.id; // safety fallback
+            activeCategory.value = categories.value[0]?.id;
         }
 
     } catch (err) {
@@ -83,15 +85,15 @@ const fetchData = async () => {
     }
 };
 
-
+// Өнімдерді фильтрациялау
 const filteredProducts = computed(() => {
     if (activeCategory.value === "*") {
         return products.value;
     }
-    console.log(activeCategory.value)
     return products.value.filter(product => product.category && product.category.id === activeCategory.value);
 });
 
+// Келесі категорияға өту
 const nextCategory = () => {
     const index = categories.value.findIndex(c => c.id === activeCategory.value);
     if (index < categories.value.length - 1) {
@@ -99,6 +101,7 @@ const nextCategory = () => {
     }
 };
 
+// Алдыңғы категорияға өту
 const prevCategory = () => {
     const index = categories.value.findIndex(c => c.id === activeCategory.value);
     if (index > 0) {
@@ -106,6 +109,7 @@ const prevCategory = () => {
     }
 };
 
+// Свайп оқиғаларын өңдеу
 const onSwipe = (direction) => {
     if (direction === "left") {
         nextCategory();
@@ -122,6 +126,26 @@ onMounted(fetchData);
 </script>
 
 <style>
+.swipe-container {
+    width: 100%;
+    position: relative;
+    touch-action: pan-y; /* вертикальды swipe үшін міндетті */
+}
+
+.filter-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox үшін */
+}
+
+.filter-scroll::-webkit-scrollbar {
+    display: none; /* Chrome/Safari үшін */
+}
 .filter-scroll {
     display: flex;
     gap: 12px;
