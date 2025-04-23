@@ -164,6 +164,8 @@ onMounted(fetchData);
 
 @media  screen and (max-width: 768px){
     .isotope-grid{
+        flex-direction: column;
+        margin-bottom: 20px !important;
         height: 80vh;
     }
 }
