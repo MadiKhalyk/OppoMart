@@ -1,5 +1,5 @@
 <template>
-    <div class="col-sm-6 col-md-4 col-lg-3 p-b-30 isotope-item" :class="product.categories">
+    <div class="col-sm-6 col-md-4 col-lg-3 p-b-15 isotope-item" :class="product.categories">
         <div class="product-card border rounded p-2">
             <!-- Сурет -->
             <div class="product-image">
