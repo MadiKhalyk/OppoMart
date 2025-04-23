@@ -2,7 +2,6 @@
     <div class="sec-product bg0 p-t-10 p-b-10">
         <!-- swipe-контейнерге overflow және position қосылды -->
         <div class="swipe-container"
-             v-touch:swipe="onSwipe"
         >
             <div class="container">
                 <!-- Категориялар -->
@@ -21,7 +20,10 @@
                 </div>
 
                 <!-- Өнімдер -->
-                <div class="row isotope-grid">
+                <div class="row isotope-grid"
+                     v-touch:swipe="onSwipe"
+                     v-touch:options="{ swipeTolerance: 50 }"
+                >
                     <ProductCard
                         v-for="product in filteredProducts"
                         :key="product.id"
