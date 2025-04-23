@@ -72,7 +72,8 @@ const addToCart = () => {
         title: props.product.unit ? `${props.product.title} (${props.product.unit})` : props.product.title,
         price: props.product.price,
         poster: props.product.poster,
-        quantity: 1
+        quantity: 1,
+        unit: props.product.unit
     };
 
     cart.add(item);
