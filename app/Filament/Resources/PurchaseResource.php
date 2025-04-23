@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PurchaseResource\Pages;
+use Filament\Tables;
 use App\Filament\Resources\PurchaseResource\RelationManagers;
 use App\Models\Purchase;
 use Filament\Resources\Form;
@@ -71,10 +72,10 @@ class PurchaseResource extends Resource
                 //
             ])
             ->actions([
-//                EditAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-//                DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 

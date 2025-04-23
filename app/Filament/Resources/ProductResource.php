@@ -38,7 +38,7 @@ class ProductResource extends Resource
                             ->required()
                             ->label('Название'),
                         RichEditor::make('description')
-                            ->required()
+                            ->required(false)
                             ->columnSpanFull(),
                         Forms\Components\TextInput::make('price')
                             ->label('Цена')
