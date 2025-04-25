@@ -2,7 +2,10 @@
 
 namespace App\Filament\Resources;
 
+use App\Enum\PurchaseStatus;
 use App\Filament\Resources\PurchaseResource\Pages;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Tables;
 use App\Filament\Resources\PurchaseResource\RelationManagers;
@@ -31,7 +34,13 @@ class PurchaseResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Select::make('status')
+                    ->label('Статус')
+                    ->options([
+                        PurchaseStatus::NEW->value => 'Новые заказы',
+                        PurchaseStatus::SHIPPED->value => 'Отправленные',
+                        PurchaseStatus::DELIVERED->value => 'Доставленные',
+                    ])
             ]);
     }
 
