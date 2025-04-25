@@ -37,7 +37,7 @@ class PurchaseResource extends Resource
                 Select::make('status')
                     ->label('Статус')
                     ->options([
-                        PurchaseStatus::NEW->value => 'Новые заказы',
+                        PurchaseStatus::CONFIRMED->value => 'Новые заказы',
                         PurchaseStatus::SHIPPED->value => 'Отправленные',
                         PurchaseStatus::DELIVERED->value => 'Доставленные',
                     ])
@@ -52,20 +52,18 @@ class PurchaseResource extends Resource
                     ->label('Телефон'),
                 TextColumn::make('products')
                     ->label('Продукты')
-                    ->formatStateUsing(function ($state) {
-                        return $state->map(function ($item) {
+                    ->formatStateUsing(function ($record) {
+                        return $record->products->map(function ($item) {
                             $product = $item->product;
                             $price = $item->price;
                             $quantity = $item->quantity;
                             $totalPrice = $price * $quantity;
-                            $priceFormat = number_format($item->price, 0, '.', ' ');
-                            $quantityFormat = number_format($quantity, 0, '.', ' ');
                             $unit = $product?->unit?->name ?? '';
-                            return "{$product->title}: {$priceFormat} x {$quantityFormat} {$unit} = {$totalPrice}";
+                            return "{$product->title}: {$price} x {$quantity} {$unit} = {$totalPrice}";
                         })
-                        ->implode(", ");
+                        ->implode("<br/>");
                     })
-                    ->wrap(),
+                    ->html(),
                 TextColumn::make('total_price')
                     ->label('Итого'),
                 TextColumn::make('address')

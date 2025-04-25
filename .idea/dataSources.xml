@@ -23,5 +23,12 @@
         </library>
       </libraries>
     </data-source>
+    <data-source source="LOCAL" name="optomart@91.147.92.151" uuid="b340a117-6999-49fa-968e-7bf28067f8a7">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://91.147.92.151:5432/optomart</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
