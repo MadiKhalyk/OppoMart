@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\PurchaseResource\Pages;
 
+use App\Enum\PurchaseStatus;
 use App\Filament\Resources\PurchaseResource;
-use Filament\Forms\Components\Tabs\Tab;
+use Filament\Resources\Components\Tab;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
 
@@ -21,15 +22,17 @@ class ListPurchases extends ListRecords
     public function getTabs(): array
     {
         return [
-            Tab::make('Активные')
-                ->icon('heroicon-o-check-circle')
+            Tab::make('Новые заказы')
                 ->modifyQueryUsing(function ($query) {
-                    return $query->where('status', true);
+                    return $query->where('status', PurchaseStatus::NEW->value);
                 }),
-            Tab::make('Неактивные')
-                ->icon('heroicon-o-trash')
+            Tab::make('Отправленные')
                 ->modifyQueryUsing(function ($query) {
-                    return $query->where('status', false);
+                    return $query->where('status', PurchaseStatus::SHIPPED->value);
+                }),
+            Tab::make('Доставленные')
+                ->modifyQueryUsing(function ($query) {
+                    return $query->where('status', PurchaseStatus::DELIVERED->value);
                 }),
         ];
     }

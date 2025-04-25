@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Enum\PurchaseStatus;
 use App\Enum\WhatsappMessageButton;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
@@ -43,10 +44,9 @@ class PurchaseController extends Controller
             ->create([
                 'user_id' => $user->id,
                 'total_price' => $validated['total_price'] ?? $totalPrice,
-                'address' => $validated['address'] ?? null
+                'address' => $validated['address'] ?? null,
+                'status' => PurchaseStatus::NEW->value
             ]);
-
-
 
         foreach ($validated['products'] as $item) {
             $product = Product::find($item['product_id']);

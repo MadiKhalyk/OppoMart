@@ -6,11 +6,13 @@ use App\Filament\Resources\UnitResource\Pages;
 use App\Filament\Resources\UnitResource\RelationManagers;
 use App\Models\Unit;
 use Filament\Forms;
-use Filament\Resources\Form;
+
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -18,7 +20,7 @@ class UnitResource extends Resource
 {
     protected static ?string $model = Unit::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $pluralLabel = 'Меры';
 
