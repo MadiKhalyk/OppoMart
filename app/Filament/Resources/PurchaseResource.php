@@ -3,23 +3,25 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PurchaseResource\Pages;
+use Filament\Forms\Form;
 use Filament\Tables;
 use App\Filament\Resources\PurchaseResource\RelationManagers;
 use App\Models\Purchase;
-use Filament\Resources\Form;
+
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 use Illuminate\Support\Carbon;
 
 class PurchaseResource extends Resource
 {
     protected static ?string $model = Purchase::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $pluralLabel = 'Покупки';
 
@@ -36,7 +38,6 @@ class PurchaseResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->defaultSort('status', 'desc')
             ->columns([
                 TextColumn::make('user.phone')
                     ->label('Телефон'),
@@ -61,9 +62,6 @@ class PurchaseResource extends Resource
                 TextColumn::make('address')
                     ->label('Адрес')
                     ->wrap(),
-                IconColumn::make('status')
-                    ->label('Статус')
-                    ->boolean(),
                 TextColumn::make('created_at')
                     ->label('Дата заказа')
                     ->formatStateUsing(fn ($state): string => Carbon::parse($state)->format('d.m.Y H:i')),

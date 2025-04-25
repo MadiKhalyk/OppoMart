@@ -4,7 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Filament\Models\Contracts\FilamentUser;
-use Filament\Tables\Columns\Layout\Panel;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -46,9 +46,9 @@ class User extends Authenticatable implements FilamentUser
         'password' => 'hashed',
     ];
 
-    public function canAccessFilament(): bool
+    public function canAccessPanel(Panel $panel): bool
     {
-        return true;
+        return true; // или логика доступа по ролям
     }
 
     public function whatsappChat(): BelongsTo
