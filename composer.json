@@ -8,6 +8,7 @@
         "php": "^8.2",
         "filament/filament": "^3.3",
         "guzzlehttp/guzzle": "^7.2",
+        "illuminate/support": "*",
         "inertiajs/inertia-laravel": "^0.6.8",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
