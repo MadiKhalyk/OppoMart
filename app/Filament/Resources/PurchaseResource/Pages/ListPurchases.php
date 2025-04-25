@@ -24,7 +24,7 @@ class ListPurchases extends ListRecords
         return [
             Tab::make('Новые заказы')
                 ->modifyQueryUsing(function ($query) {
-                    return $query->where('status', PurchaseStatus::NEW->value);
+                    return $query->where('status', PurchaseStatus::CONFIRMED->value);
                 }),
             Tab::make('Отправленные')
                 ->modifyQueryUsing(function ($query) {

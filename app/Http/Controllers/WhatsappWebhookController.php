@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\PurchaseStatus;
 use App\Enum\WhatsappMessageButton;
-use App\Enum\WhatsappMessageButtonEnum;
 use App\Enum\WhatsappMessageType;
 use App\Models\WhatsappChat;
 use App\Services\FacebookService;
@@ -84,7 +84,6 @@ class WhatsappWebhookController extends Controller
 
                             if ($interactiveType == 'button_reply') {
                                 $button = $messages['interactive']['button_reply']['id'] ?? null;
-                                Log::debug($messages);
                                 $this->messageButtonAction($button, $chat);
                             }
                         }
@@ -98,13 +97,11 @@ class WhatsappWebhookController extends Controller
 
     private function messageButtonAction($button, $chat): void
     {
-        Log::debug($button);
         $user = $chat->user;
         switch ($button) {
             case WhatsappMessageButton::CONFIRM->value:
-                Log::debug($user->purchase);
                 $user->purchase()->update([
-                    'status' => true
+                    'status' => PurchaseStatus::CONFIRMED->value
                 ]);
                 break;
             default:
