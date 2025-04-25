@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -19,6 +20,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (!Type::hasType('enum')) {
+            // Регистрируем enum тип
+            Type::addType('enum', 'Doctrine\DBAL\Types\StringType');
 
+            // Получаем платформу и маркируем тип как комментируемый
+            $platform = $this->app['db']->getDoctrineConnection()->getDatabasePlatform();
+            $platform->markDoctrineTypeCommented(Type::getType('enum'));
+        }
     }
 }
