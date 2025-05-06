@@ -1,7 +1,7 @@
 <script setup>
-import { useCartStore } from '@/stores/cart';
-import { ref } from 'vue';
-import { onMounted, onBeforeUnmount } from 'vue';
+import {useCartStore} from '@/stores/cart';
+import {ref} from 'vue';
+import {onMounted, onBeforeUnmount} from 'vue';
 
 const cartRef = ref(null);
 
@@ -19,7 +19,7 @@ onBeforeUnmount(() => {
     document.removeEventListener('click', handleClickOutside);
 });
 
-const cart = useCartStore(); // Pinia store-ды қолданамыз
+const cart = useCartStore();
 const cartOpen = ref(false);
 
 const toggleCart = () => {
@@ -30,19 +30,21 @@ const toggleCart = () => {
 <template>
     <div class="wrap-cart-header" ref="cartRef">
         <div @click="toggleCart" class="icon-header-item">
-            <img src="/assets/images/icons/icon-cart-2.png" alt="CART" />
+            <img src="/assets/images/icons/icon-cart-2.png" alt="CART"/>
             <span v-if="cart.count > 0" class="badge">{{ cart.count }}</span>
         </div>
 
         <div v-if="cartOpen" class="cart-header">
             <div v-for="item in cart.items" :key="item.id" class="cart-item">
-                <img class="product-img" :src="'/storage/' + item.poster" :alt="item.title" />
+                <img class="product-img" :src="'/storage/' + item.poster" :alt="item.title"/>
                 <div class="product-text">
                     <p>{{ item.title }}</p>
-                    <p>
-                        {{ item.price }}тг x{{ item.quantity }}
-                        {{ item.unit ? item.unit : 'шт' }}
-                    </p>
+                    <p>{{ item.price }}тг x {{ item.quantity }} {{ item.unit || 'шт' }}</p>
+                    <div class="quantity-controls">
+                        <button @click="cart.decrease(item.id)">−</button>
+                        <span>{{ item.quantity }}</span>
+                        <button @click="cart.increase(item.id)">+</button>
+                    </div>
                 </div>
             </div>
             <div class="cart-footer">
@@ -58,29 +60,46 @@ const toggleCart = () => {
     </div>
 </template>
 
-
 <style scoped>
-    .cart-header{
-        transform: scale(1);
-    }
-    .product-img{
-        width: 50px;
-        height: 50px;
-        object-fit: cover;
-    }
+.cart-header {
+    transform: scale(1);
+}
 
-    .cart-item{
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 10px
-    ;
-    }
-    .btn-main{
-        background-color: #EB7514;
-    }
+.product-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
 
-    .product-text{
-        font-size: 12px;
-    }
+.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.btn-main {
+    background-color: #eb7514;
+}
+
+.product-text {
+    font-size: 12px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 5px;
+}
+
+.quantity-controls button {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: #ccc;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
 </style>
