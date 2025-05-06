@@ -59,7 +59,10 @@ class ProductResource extends Resource
                             ->required(),
                         Forms\Components\Select::make('unit_id')
                             ->label('Мера')
-                            ->options(Unit::all()->pluck('name', 'id')),
+                            ->relationship('unit', 'name')
+                            ->preload()
+                            ->searchable()
+                            ->required(),
                         Forms\Components\Toggle::make('active')
                             ->label('Показать')
                             ->default(true),
@@ -76,7 +79,7 @@ class ProductResource extends Resource
                     ->label('Название'),
                 TextColumn::make('description')
                     ->label('Текст')
-                    ->formatStateUsing(fn ($state) => strip_tags($state)),
+                    ->formatStateUsing(fn($state) => strip_tags($state)),
                 TextColumn::make('price')
                     ->label('Цена'),
                 TextColumn::make('old_price')
