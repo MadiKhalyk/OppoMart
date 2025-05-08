@@ -55,13 +55,18 @@ class PurchaseResource extends Resource
                     ->formatStateUsing(function ($record) {
                         return $record->products->map(function ($item) {
                             $product = $item->product;
+
+                            if (!$product) {
+                                return 'Продукт не найден';
+                            }
+
                             $price = $item->price;
                             $quantity = $item->quantity;
                             $totalPrice = $price * $quantity;
-                            $unit = $product?->unit?->name ?? '';
+                            $unit = $product->unit->name ?? '';
+
                             return "{$product->title}: {$price} x {$quantity} {$unit} = {$totalPrice}";
-                        })
-                        ->implode("<br/>");
+                        })->implode("<br/>");
                     })
                     ->html(),
                 TextColumn::make('total_price')
